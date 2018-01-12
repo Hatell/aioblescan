@@ -88,6 +88,8 @@ def my_process(data):
     elif opts.minew:
         xx=Minew().decode(ev)
         if xx:
+            from datetime import datetime
+            xx["time"] = datetime.now()
             print("{}".format(xx))
     else:
         ev.show(0)
