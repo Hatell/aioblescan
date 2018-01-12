@@ -28,6 +28,7 @@ import re
 import aioblescan as aiobs
 from aioblescan.plugins import EddyStone
 from aioblescan.plugins import RuuviWeather
+from aioblescan.plugins import Minew
 
 
 def check_mac(val):
@@ -45,6 +46,8 @@ parser.add_argument("-m", "--mac", type=check_mac, action='append',
                     help="Look for these MAC addresses.")
 parser.add_argument("-r","--ruuvi", action='store_true', default=False,
                     help="Look only for Ruuvi tag Weather station messages")
+parser.add_argument("-M","--minew", action='store_true', default=False,
+                    help="Look only for Minew tag Temp/Hum messages")
 parser.add_argument("-R","--raw", action='store_true', default=False,
                     help="Also show the raw data.")
 parser.add_argument("-a","--advertise", type= int, default=0,
@@ -82,6 +85,10 @@ def my_process(data):
         xx=RuuviWeather().decode(ev)
         if xx:
             print("Weather info {}".format(xx))
+    elif opts.minew:
+        xx=Minew().decode(ev)
+        if xx:
+            print("{}".format(xx))
     else:
         ev.show(0)
 
